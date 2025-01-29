@@ -1,0 +1,22 @@
+{% extends "accounts/base.html" %}
+{%block content%}
+    <div class="center-box">
+        <h1>Profileinstellungen {{user.username}}</h1>
+
+        <section >
+            <h4>Hier kannst du dein Profil bearbeiten</h4>
+            <div>
+                <p>Deine Profil: </p>
+                {% if user.profile_photo %}
+                    <img src="{{ user.profile_photo.url }}" alt="Profilfoto" width="100" class="img-round img-square">
+                {% else %}
+                    <p>Kein Profilfoto vorhanden.</p>
+                {% endif %}
+                <p>Name: {{user.username}}</p>
+                <p>Email: {{user.email}}</p>
+                <p>Beschreibung: {{user.description}}</p>
+            </div>
+                <a href="{%url 'manageprofile'%}" class="link-button" style="background-color: #98FF98; margin-top: 5vh;">Profil bearbeiten✏️</a>            
+        </section>
+    </div>
+{%endblock content%}

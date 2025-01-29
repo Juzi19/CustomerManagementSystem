@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoFrog Kundenportal - Home</title>
+    {% load static %}
+    <link type="text/css" rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+
+</head>
+<body class="body-full">
+    <section class="top-banner">
+        <div class="">
+            <h1 style="font-size: 1.25rem;">NoFrog Kundenportal</h1>
+        </div>
+    </section>    
+    <section class="text1">
+        <p>Mit dem nofrog Kundenportal springen wir noch schneller! Einfache Kommunikation und ein guter Überblick garantiert!</p>
+    </section>
+    <hr class="hr-bold">
+    <section style="margin-bottom: 1.5rem;">
+        <div class="text_and_elements">
+            <div class="texthalfscreen">
+                <h4 style="margin-bottom: 5px;">Zugriff auf unsere Dienste: </h4>
+                <div >
+                    <a href="/login" class="link-button">Login</a>
+                </div>
+                <div >
+                    <a href="/projects/" class="link-button" >Projekte</a>
+                </div>
+                <div >
+                    <a href="/chat/start/overview" class="link-button">Chat</a>
+                </div>
+                <div >
+                    <a href="/files" class="link-button">Dokumente</a>
+                </div>
+                <div >
+                    <a href="/accounts" class="link-button">Konto</a>
+                </div>
+            </div>
+            <div>
+                <img src="{% static 'accounts/images/frog_01.webp' %}" alt="Ein Frosch" class="imagehalfscreen">
+            </div>
+        </div>
+    </section>
+    <hr class="hr-bold">
+    <section style="display: flex; justify-content: center; margin-top: 1rem;">
+        <a href="#" class="link-button-full">Homepage - nofrog Webdesign</a>
+    </section>
+    <footer class="basic-footer">
+        <div>
+            <p>Ein Nofrog Projekt 🐸</p>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <a href="#" style="margin-top: 4px;">NoFrog Webdesign</a>
+            <a href="#"><small>für Impressum, Datenschutz</small></a>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
+
+

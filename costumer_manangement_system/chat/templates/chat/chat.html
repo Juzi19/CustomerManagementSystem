@@ -1,0 +1,25 @@
+{% extends "accounts/base.html" %}
+{%block content%}
+<div class="center-box">
+    <h1>Chats:</h1>
+    <p>Public Chat:</p>
+    <a href="/chat/" class="link-button" style="background-color: gainsboro;">Alle Benutzer</a>
+    <p>Chat mit:</p>
+    {%for element in chats%}
+    {%if element.1%}
+    <div class="center-box link-button">
+    <a href="/chat/room/{{element.0}}">{{element.1 | join:", " }}</a>
+    <small>Chat: {{element.0}}</small>
+    </div>
+    {%endif%}
+    {%endfor%}
+    <div>
+        <small>oder</small>
+        <hr style="width: 80vw;">
+    </div>
+    <div>
+        <a href="{%url 'chat:new-chat-userinput'%}" class="link-button" style="background-color: #8CD2EE;">Neuen Chat erstellen</a>
+    </div>
+</div>
+    
+{%endblock content%}

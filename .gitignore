@@ -1,0 +1,46 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pyc
+*.pyo
+
+# Django specific
+db.sqlite3  # SQLite-Datenbankdatei (wenn verwendet)
+*.log  # Log-Dateien
+*.pot  # Übersetzungsdateien
+*.pyc
+*.pyo
+
+# Virtuelle Umgebungen
+my-venv/
+env/
+.venv/
+.env/
+
+# Django migrations (falls du Migrationen nicht versionieren möchtest)
+**/migrations/*
+!**/migrations/__init__.py
+
+# Flask/Django/Pipenv
+Pipfile
+Pipfile.lock
+venv/
+env/
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+
+# Umgebungsdateien
+*.env
+.env
+
+# IDEs und Editor-spezifische Dateien
+.vscode/
+.idea/
+
+# Static/Media Dateien (werden im Allgemeinen nicht versioniert)
+staticfiles/
+media/

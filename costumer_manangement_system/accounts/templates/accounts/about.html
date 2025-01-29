@@ -1,0 +1,16 @@
+{% extends "accounts/base.html" %}
+{%block content%}
+    <div class="center-box">
+        <h1>{{aboutuser.username}}</h1>
+        <div>
+            <img src="/media/{{aboutuser.profile_photo}}" alt="Profilbild {{aboutuser.username}}" width="100" class="img-round img-square">
+        </div>
+        <div>
+            <p>{{aboutuser.description}}</p>
+        </div>
+        <div>
+            <a href="/chat/{{aboutuser.username}}" class="link-button">Chatten💬</a>
+        </div>
+    </div>
+    
+{%endblock content%}

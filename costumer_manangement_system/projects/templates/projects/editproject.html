@@ -1,0 +1,38 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+    <h2>Projekt bearbeiten</h2>
+
+    <div>
+        <form action="" method="post">
+            {%csrf_token%}
+            <p>Projektname: <input type="text" name="projectname" id="projectname" value="{{project.projectname}}"></p>
+            <p>ID: {{project.projectid}} <small>Kann nicht bearbeitet werden</small></p>
+            <h4>Weitere Einstellungen</h4>
+            <p>Beschreibung: <textarea name="projectdescription" id="projectdescription">{{project.projectinfo.description}}</textarea></p>
+            <p>Mitglieder: 
+                {%for member in project.projectinfo.member%}
+                    <!--name describes the id of the user that is about to get deleted-->
+                    <p>{{member.1}} || Entfernen:<input type="checkbox" name="{{member.0}}" id="deletecheckbox"></p>
+                {%endfor%}
+            </p>
+            <p>Neues Mitglied: <select name="newmember" id="newmember">
+                <option value="">---</option>
+                {% for user in users %}
+                    <option value="{{user.id}}">{{ user.username }} bzw ID:{{ user.id }}</option>
+                {% endfor %}
+            </select></p>
+            
+            <p>Chat löschen(yes/no): <input type="checkbox" name="projectchatdelete" id="projectchatdelete"></p>
+            <p>Fortschritt: <select name="projectprogress" id="projectprogress">
+                <option value="start">Start</option>
+                <option value="coding">Code wird geschrieben...</option>
+                <option value="testing">Projekt wird getestet</option>
+                <option value="done">Projekt fertig! </option>
+                <option value="inactive">Inaktiv/fertig bearbeitet</option>
+            </select></p>
+
+            <button type="submit">Ändern</button>
+        </form>
+    </div>
+<small>Hinweis: Projekte können aus Sicherheitsgründen nur im Admin-Bereich gelöscht werden. Bei einer Ferigstellung eines Projektes sollte normalerweise der Zustand auf inaktiv gesetzt werden</small>
+{% endblock %}

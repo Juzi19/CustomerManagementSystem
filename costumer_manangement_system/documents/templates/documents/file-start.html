@@ -1,0 +1,39 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div class="center-box">
+    <h2>Hallo {{user.username}}!</h2>
+    <h3>Hier ist dein persönlicher Ablageplatz für Dokumente</h3>
+    <h4>Deine Dokumente:</h4>
+    {%for file in filesinuser%}
+        <div class="document-box">
+            <p>{{file.0.name}}</p>
+            {%if file.0.info.public%}
+            <p>Öffentlich</p>
+            {%else%}
+            <p>Privat</p>
+            {%endif%}
+            {%if p in file.1%} 
+                <p>Im Projekt:</p>
+                <ul>
+                    {%for p in file.1%}
+                        <li><a href="/projects/{{p.projectid}}">{{p.projectname}}</a></li>
+                    {%endfor%}
+                </ul>
+            {%endif%}
+                
+            <a href="{%url 'file-delete' fileid=file.0.id%}" class="link-button" style="background-color: rgb(255, 129, 129);">Dokument löschen</a>
+            <a href="{%url 'files-show' fileid=file.0.id %}" class="link-button" style="background-color: #98FF98;">Öffnen</a>
+        </div>
+    {%endfor%}
+    <div>
+        <hr style="width: 80vw;">
+    </div>
+    <div class="center-box" style="margin-top: 2%;">
+        <a href="{%url 'files-public'%}" class="link-button">Alle öffentlichen Files</a>
+        <a href="{%url 'files-add'%}" class="link-button">Dokument hochladen</a>
+    </div>
+</div>
+    
+
+
+{% endblock %}

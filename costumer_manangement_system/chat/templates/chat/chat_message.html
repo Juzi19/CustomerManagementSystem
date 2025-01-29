@@ -1,0 +1,26 @@
+{%if message.author == user%}
+
+        <div class="messageself">
+            <small>Von dir</small>
+            {%if message.body == None%}
+            <p>Dokument</p>
+            {%else%}
+            <p>{{message.body}}</p>
+            {%endif%}
+            {%if message.file%}
+            <a href="{{message.file.url}}">Anhang 📄</a>
+            {%endif%}
+        </div>
+{%else%}
+        <div class="messageother">
+            <small>von {{message.author}}</small>
+            {%if message.body == None%}
+            <p>Dokument</p>
+            {%else%}
+            <p>{{message.body}}</p>
+            {%endif%}
+            {%if message.file%}
+            <a href="{{message.file.url}}" style="color: rgb(154, 154, 154);">Anhang 📄</a>
+            {%endif%}
+        </div>
+        {%endif%}

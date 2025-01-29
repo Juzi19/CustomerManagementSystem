@@ -1,0 +1,129 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div class="center-box">
+        <h2>Chat</h2>
+    <div>
+        {% if other_user %}
+        <p>Mit {{other_user}}</p>
+        {%endif%}
+    </div>
+    <hr style="width: 80vw;">
+    <div id="chatcontainer">
+        <div id="onlinecountcontainer">
+            {%include 'chat/partials/online_count.html'%}
+        </div>
+        <div id="chat_messages">
+            {% for message in chat_messages reversed%}
+            {%include 'chat/chat_message.html'%}
+            {%endfor%}
+        </div>
+    </div>
+    <div>
+        <div class="center-box" style="margin-bottom: 5%;">
+            <form id="chat_message_form" 
+            hx-ect="ws"
+            hx-trigger="submit"
+            hx-target="#chat_messages"
+            hx-swap="beforeend"
+            onsubmit="sendMessage(event)">
+            {% csrf_token %}
+            {{ form.body }}
+            <button type="submit" class="bt-green" style="margin-top: 1vh;">Text senden</button>
+        </form>
+        </div>
+        <div>
+            <form id="file_message_form" 
+        method="post"
+        enctype="multipart/form-data"
+        hx-ect="ws"
+        hx-trigger="submit"
+        hx-target="#chat_messages"
+        hx-swap="beforeend"
+        onsubmit="uploadfile(event)">
+            {%csrf_token%}
+            <input type="file" name="file" id="id_file">
+            <button type="submit" style="background-color: gainsboro; border: none; border-radius: 0.25rem; padding: 5px;">File Senden</button>
+        </form>
+        </div>
+        
+        
+    </div>
+</div>
+
+<!-- Kontextdaten im HTML-Template einbetten -->
+<script id="context-data" type="application/json">
+    {{ chatroom_name }}
+</script>
+  
+{% endblock %}
+
+{%block javascript%}
+<script>
+     // JSON-Daten aus dem <script>-Tag lesen und in JavaScript verwenden
+    const c_name = document.getElementById("context-data").textContent;
+    const chatroom_name = c_name.trim()
+    console.log("Chat Name",chatroom_name)
+
+    // Liest die Chatroom-Daten aus dem JSON-Skript-Tag
+    //kommunikation funktioniert an der stelle nicht/weil kontext falsch gelesen wird
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const chatSocket = new WebSocket(`${protocol}://${window.location.host}/ws/chatroom/${chatroom_name.toString()}`);
+
+    // Sobald die WebSocket-Verbindung geöffnet ist
+    chatSocket.onopen = function(e) {
+        console.log('WebSocket-Verbindung geöffnet');
+    };
+
+    // Wenn eine Nachricht vom Server empfangen wird
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        if (data.message_html) {
+            document.getElementById('chat_messages').insertAdjacentHTML('beforeend', data.message_html);
+        }
+        if (data.online_count_html) {
+        // Das <p>-Element aktualisieren, indem der HTML-Code ersetzt wird
+        document.getElementById('online_count').outerHTML = data.online_count_html;
+    }
+    };
+
+    // Wenn die Verbindung geschlossen wird
+    chatSocket.onclose = function(e) {
+        console.error('WebSocket-Verbindung geschlossen:', e);
+    };
+
+    // Funktion zum Senden von Nachrichten über WebSocket
+    function sendMessage(event) {
+        event.preventDefault(); // Verhindert das automatische Senden des Formulars
+        const message = document.querySelector('input[name="body"]').value;
+        chatSocket.send(JSON.stringify({ 'message': message }));
+        document.querySelector('input[name="body"]').value = ''; // Eingabefeld zurücksetzen
+    }
+    
+    function uploadfile(event){
+        event.preventDefault();
+        const formElement = event.target;
+        const formData = new FormData(formElement); // Formulardaten sammeln
+        
+        // Senden des Formulars über fetch() an die definierte URL
+    fetch(`/chat/fileupload/${chatroom_name}/`, {  // Die URL für den Datei-Upload anpassen
+        method: "POST",
+        body: formData,
+        headers: {
+            'HX-Request': 'true',  // Signalisiert HTMX-Anfrage
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value  // CSRF-Token hinzufügen
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Datei erfolgreich hochgeladen.");
+            document.querySelector('input[name="file"]').value = ''; // Eingabefeld zurücksetzen
+
+        } else {
+            console.error("Fehler beim Hochladen der Datei.");
+        }
+    })
+    .catch(error => console.error("Fehler beim Senden:", error));
+    }
+    
+</script>
+{%endblock%}

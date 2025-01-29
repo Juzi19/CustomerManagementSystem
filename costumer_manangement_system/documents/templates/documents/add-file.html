@@ -1,0 +1,33 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div class="center-box">
+    <h2>Hallo {{user.username}}!</h2>
+    <hr style="width: 80%;">
+    <h3>Hier kannst du ein Dokument hochladen!</h3>
+    <form action="" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <h4>Dokument:</h4>
+        <input type="file" name="file" id="inputfile">
+        <h4>Name:</h4>
+        <input type="text" name="name" placeholder="Dokumentname">
+        <h4>Öffentlich:</h4>
+        <input type="checkbox" name="public">
+        <h4>Suche:</h4>
+        <div style="margin-bottom: 5%;">
+            <small>um Dokument mit Projekt zu verknüpfen:</small>
+        </div>
+        <input type="text" list="suggestions" name="in_project" id="search-input" placeholder="Projekt" />
+        <datalist id="suggestions">
+            <option value="---"></option>
+            {%for project in projects%}
+            <option value="{{project.projectid}}">{{project.projectname}} bzw. Projekt {{project.projectid}}</option>
+            {%endfor%}
+        </datalist>
+        <hr style="width: 80vw; margin-top: 5%;">
+        <div class="center-box" style="margin-top: 5%;">
+            <button type="submit" class="bt-green">Hochladen</button>
+
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "accounts/base.html" %}
+{%block content%}
+    <div style="margin-left: 0.4vw;">
+
+        <section>
+            <p>Bitte Email Adresse eingeben: </p>
+            <form action="" method="post" enctype=multipart/form-data>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="bt-green">Senden!</button>
+            </form>
+        </section>
+    </div>
+{%endblock content%}

@@ -1,0 +1,16 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div class="center-box">
+    <h2>Hier erhälst einen Überblick über deine aktuellen Projekte!</h2>
+    {%for element in user.active_projects.projects%}
+        <a href="./{{element.id}}" class="link-button">{{element.name}}</a>
+    {%endfor%}
+    <div>
+        {%if user.employee%}
+        <p>oder</p>
+        <a href="{%url 'project-new' %}" class="link-button" style="background-color: #99FF98;">Neues Projekt erstellen</a>
+        {%endif%}
+    </div>
+</div>
+    
+{% endblock %}

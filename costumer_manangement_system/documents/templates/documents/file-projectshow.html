@@ -1,0 +1,9 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+    <h1>Überblick über die Dokumente im Projekt {{project.projectname}}</h1>
+    {%for file in files%}
+        <a href="{%url 'files-show' fileid=file.id%}">{{file.name}}</a>
+        <p>von {{file.info.author}}</p>
+    {%endfor%}
+
+{% endblock %}

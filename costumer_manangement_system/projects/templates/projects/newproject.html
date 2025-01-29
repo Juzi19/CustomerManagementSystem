@@ -1,0 +1,13 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div class="center-box">
+    <h2>Erstelle ein neues Projekt!</h2>
+    <form action="" method="post">
+        {%csrf_token%}
+        <h4>Es wird ein leeres Projekt mit nur dir als Mitglied erstellt. Danach kannst du es unter meine Projekte bearbeiten!</h4>
+        <input type="text" name="projectname">
+        <button type="submit" class="bt-green">Projekt erstellen</button>
+    </form>
+</div>
+    
+{% endblock %}

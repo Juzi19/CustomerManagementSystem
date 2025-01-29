@@ -1,0 +1,7 @@
+{% extends "accounts/base.html" %}
+{%block content%}
+    <div class="center-box">
+        <p>Neuer Chat mit Josh:</p>
+        <a href="{%url 'start-chat' profile.user.username %}">Click</a>
+    </div>
+{%endblock content%}

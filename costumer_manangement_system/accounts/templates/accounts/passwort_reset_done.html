@@ -1,0 +1,9 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div style="display: flex; flex-direction: column;">
+    <h2>Passwort zurücksetzen</h2>
+    <p>Wenn die E-Mail-Adresse in unserem System existiert, haben wir eine Nachricht mit weiteren Anweisungen gesendet.</p>
+    <a href="{% url 'login' %}">Zurück zur Anmeldung</a>
+</div>
+    
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div class="chat-box">
+    <div class="chat-width-element center-box">
+        <h2>{{ project.projectname }}</h2>
+            <p>{{project.projectinfo.description}}</p>
+            <p>Fortschritt: {{project.projectinfo.progress}}</p>
+        <div>
+            <p>Mitglieder:</p>
+            {%for member in project.projectinfo.member%}
+            <div>
+                <a href="/accounts/profile/{{member.1}}">{{member.1}}</a>
+            </div>
+            {%endfor%}
+        </div>
+        <div style="margin-top: 3vh;">
+            <a href="{%url 'file-projectshow' projectid=project.projectid%}" class="link-button">Dokumente aus diesem Projekt🗃️</a>
+        </div>
+        <div>
+            <a href="/chat/room/{{project.projectname}}/" class="link-button">Projekt-Chat💬</a>
+        </div>
+        <div>
+            {%if user.employee%}
+                <a href="./edit" class="link-button" style="background-color: #98FF98;">Bearbeiten✏️</a>
+            {%endif%}
+        </div>
+    </div>
+
+
+    <div class="chat-width-element">
+        <div>
+            <p>Neuer Pinn:</p>
+            <form action="" method="post">
+                {%csrf_token%}
+                <textarea name="newmessage" id="newmessage" style="width: 49vw;height: 10vh;"></textarea>
+                <div style="margin-top: 2vh;">
+                    <button type="submit" class="bt-green">Senden📤</button>
+                </div>
+                
+            </form>
+        </div>
+        <div style="border: 3px solid gray; margin: 3px; padding: 3px; margin-top: 3vh;">
+            <h4>Pinnwand:</h4>
+            {%for message in project.projectinfo.chat %}
+                <div style="border: 3px solid gray; margin: 3px; padding: 3px;">
+                    <small>Pinn: {{message.2}}</small>
+                    <p>{{message.0}}</p>
+                    <small>von: {{message.1}}</small>
+                </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+    
+    
+{% endblock %}

@@ -1,0 +1,67 @@
+<!--Loads in static files-->
+{%load static%}
+<!--Base Section. Home und about erben davon um redundanzen zu verhindern-->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%if title %}
+    <title>{{title}}</title>
+    {%else%}
+    <title>NoFrog Kundenportal</title>
+    {%endif%}
+    {% load static %}
+    <link type="text/css" rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+    <script src="https://unpkg.com/alpinejs@3.10.0/dist/cdn.min.js" defer></script>
+    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>    
+    <script src="https://unpkg.com/hyperscript.org@0.9.13"></script>
+ 
+</head>
+<body style="width: 100vw;">
+    <header class="header-full">
+        <nav class="nav-full">
+            <div>
+                <a href="{%url 'account-start'%}">Start</a>
+                <a href="{%url 'project-overview'%}">Projekte</a>
+                <a href="{%url 'file-start'%}">Dokumente</a>
+                <a href="/chat/start/overview">Chat</a>
+            </div>
+            <div style="margin-left: auto; display: flex; width: max-content;">
+                {%if user.is_authenticated%}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-bt">Logout</button>
+                </form>
+                {%endif%}
+            </div>
+        </nav>
+    </header>
+    <div class="message">
+        <div class="message-text">
+        {% if messages %}
+            <ul style="list-style-type: none;">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        </div>
+        
+    </div>
+    <main class="main-full">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="basic-footer bg-skyblue">
+        <a href="#">Alles zu Impressum und co.</a>
+        <p>powered by nofrog 🐸</p>
+    </footer>
+
+    
+   {% block javascript %}
+    {%endblock%}
+    
+</body>
+</html>

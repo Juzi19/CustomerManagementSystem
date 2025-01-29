@@ -1,0 +1,14 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<div class="center-box">
+    <h2>Hallo {{user.username}}!</h2>
+    <h3>Hier findest du einen Überblick über alle Öffentlichen Dokumente:</h3>
+    <div class="link-button">
+        {%for file in publicfiles%}
+            <a href="{%url 'files-show' fileid=file.id%}">{{file.name}}</a>
+        {%endfor%}
+    </div>
+</div>
+    
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "accounts/base.html" %}
+{%block content%}
+    <div class="content-box">
+        <section class="text-full-box">
+            <h1>Willkommen {{user.username}}</h1>
+            <p>im nofrog Kundenportal 🐸</p>
+        </section>
+        <section style="padding-bottom: 0px; border: none;" class="text-full-box">
+            <h4>Hier findest du einen Überblick über deine Aufgaben:</h4>
+        </section>
+        <section>
+            <div class="text-center">
+                <p>Deine Projekte: </p>
+                
+                {%for element in user.active_projects.projects%}
+                <a href="/projects/{{element.id}}" class="link-button">{{element.name}}</a>
+                {%endfor%}
+            
+                
+            </div>
+            <div style="padding-top: 3vh;" class="text-center">
+                {%if user.employee%}
+                <h4>Dein Status: Mitarbeiter</h4>
+                {%else%}
+                <h4>Dein Status: Kunde</h4>
+                {%endif%}
+            </div>
+            <div class="text-center">
+                <div>
+                    <a href="{%url 'account-profile' username=user.username%}" class="link-button" style="background-color: #98FF98;">Kontoeinstellungen</a>
+                </div>
+            </div>
+            <div class="text-center">
+                    {%if user.employee %}
+                    <a href="/announcements/" class="link-button" style="background-color: #98FF98;"> Ankündigen</a>
+                    {%endif%}
+
+                
+            </div>
+        </section>
+    </div>
+{%endblock content%}
