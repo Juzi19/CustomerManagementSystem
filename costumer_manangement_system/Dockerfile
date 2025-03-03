@@ -8,10 +8,10 @@ ENV PYTHONBUFFERED=1
 ENV PORT 8080
 
 # Set the working directory within the container to /app for any subsequent commands
-WORKDIR /app
+WORKDIR /api/api
 
 # Copy the entire current directory contents into the container at /app
-COPY . /app/
+COPY . /api/
 
 # Upgrade pip to ensure we have the latest version for installing dependencies
 RUN pip install --upgrade pip
@@ -19,12 +19,12 @@ RUN pip install --upgrade pip
 # Install dependencies from the requirements.txt file to ensure our Python environment is ready
 RUN pip install -r requirements.txt
 
-#collects static files
-RUN python manage.py collectstatic --noinput
-
+#migrate files
 RUN python manage.py makemigrations --noinput
 RUN python manage.py migrate --noinput
-RUN python manage.py initadmin
+
+
+#Next js frontend
 
 # Set the command to run our web service using Gunicorn, binding it to 0.0.0.0 and the PORT environment variable
 CMD daphne -b 0.0.0.0 -p "${PORT}" costumer_manangement_system.asgi:application
